@@ -22,7 +22,10 @@ public class EstateAccount {
     @Enumerated(EnumType.STRING)
     private AccountStatus status;
 
+    @ManyToOne
+    private RegieAggent regie;
 
     @OneToMany(mappedBy = "estateAccount",fetch = FetchType.LAZY)
     private List<AccountOperation> accountOperations;
+
 }

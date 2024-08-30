@@ -46,6 +46,9 @@ public class EstateAccountServiceImpl implements EstateAccountService {
         return dtoMapper.fromregieAggent(savedRegieAgent);
     }
 
+    //Problemos
+    //probleme trouver au niveau du mapper qui affect tous les value d'objet
+    //il met null pour tous les values
 
     @Override
     public EstateAccountDTO saveEstateAccount(double iniTialmontant, String address) {
@@ -56,7 +59,9 @@ public class EstateAccountServiceImpl implements EstateAccountService {
         estateAccount.setStatus(AccountStatus.CREATED);
         estateAccount.setAddress(address);
         estateAccountRepository.save(estateAccount);
-        return dtoMapper.fromestateAccount(estateAccount);
+        EstateAccountDTO et =dtoMapper.fromestateAccount(estateAccount);
+        System.out.println("1-2-"+et);
+        return et;
     }
     @Override
     public EstateAccountDTO saveEstateAccount2(EstateAccount estateAccount){
@@ -123,6 +128,7 @@ public class EstateAccountServiceImpl implements EstateAccountService {
     @Override
     public List<EstateAccountDTO> listEstateAccount() {
         List<EstateAccount> bankAccounts = estateAccountRepository.findAll();
+        System.out.println("-bankos-");
         List<EstateAccountDTO> bankAccountDTOS = bankAccounts.stream()
                 .map(est -> dtoMapper.fromestateAccount(est))
                 .collect(Collectors.toList());

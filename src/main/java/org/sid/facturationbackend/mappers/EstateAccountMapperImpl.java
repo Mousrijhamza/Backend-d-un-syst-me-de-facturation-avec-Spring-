@@ -23,7 +23,8 @@ public class EstateAccountMapperImpl {
 
     public EstateAccountDTO fromestateAccount(EstateAccount estateAccount){
         EstateAccountDTO estateAccountDTO=new EstateAccountDTO();
-        BeanUtils.copyProperties(estateAccountDTO,estateAccount);
+        //ma9lobin li fi copyProperties
+        BeanUtils.copyProperties(estateAccount,estateAccountDTO);
 //        estateAccountDTO.setRegieAggentDTO(fromregieAggent(estateAccount.getRegie()));
 
         return estateAccountDTO;
