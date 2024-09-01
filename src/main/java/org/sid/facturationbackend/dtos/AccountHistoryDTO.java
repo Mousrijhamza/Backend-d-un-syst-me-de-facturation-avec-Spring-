@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 @Data
 public class AccountHistoryDTO {
-    private Long accountId;
+    private String accountId;
     private double balance;
     private int currentPage;
     private int totalPages;

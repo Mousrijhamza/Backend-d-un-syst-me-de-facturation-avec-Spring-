@@ -177,13 +177,13 @@ public class EstateAccountServiceImpl implements EstateAccountService {
 
     @Override
     public AccountHistoryDTO getAccountHistory(String accountId, int page, int size) throws BankAccountNotFoundException {
-        EstateAccount bankAccount=estateAccountRepository.findById(accountId).orElse(null);
+        EstateAccount bankAccount=estateAccountRepository.findByIdStartingWith(accountId);
         if(bankAccount==null) throw new BankAccountNotFoundException("Account not Found");
         Page<AccountOperation> accountOperations = accountOperationRepository.findByEstateAccountIdOrderByOperationDateDesc(accountId, PageRequest.of(page, size));
         AccountHistoryDTO accountHistoryDTO=new AccountHistoryDTO();
         List<AccountOperationDTO> accountOperationDTOS = accountOperations.getContent().stream().map(op -> dtoMapper.fromAccountOperation(op)).collect(Collectors.toList());
         accountHistoryDTO.setAccountOperationDTOS(accountOperationDTOS);
-        accountHistoryDTO.setAccountId(Long.valueOf(bankAccount.getId()));
+        accountHistoryDTO.setAccountId(bankAccount.getId());
         accountHistoryDTO.setBalance(bankAccount.getMontant());
         accountHistoryDTO.setCurrentPage(page);
         accountHistoryDTO.setPageSize(size);

@@ -25,7 +25,8 @@ public class EstateAccount {
     @ManyToOne
     private RegieAggent regie;
 
-    @OneToMany(mappedBy = "estateAccount",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "estateAccount",fetch = FetchType.LAZY, cascade = CascadeType.ALL,
+    orphanRemoval = true)
     private List<AccountOperation> accountOperations;
 
 }

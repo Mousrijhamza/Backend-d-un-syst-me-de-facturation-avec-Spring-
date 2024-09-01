@@ -17,6 +17,7 @@ public class AccountOperation {
     @Enumerated(EnumType.STRING)
     private OperationType type;
     @ManyToOne()
+    @JoinColumn
     private EstateAccount estateAccount;
     private String description;
 }

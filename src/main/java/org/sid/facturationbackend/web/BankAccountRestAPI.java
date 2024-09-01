@@ -27,7 +27,7 @@ public class BankAccountRestAPI {
     }
     @GetMapping("/Estaccounts/search")
     public List<EstateAccountDTO> searchEstateaccount(@RequestParam(name = "keyword",defaultValue = "") String keyword){
-        return bankAccountService.searchEstateAccount("%"+keyword+"%");
+        return bankAccountService.searchEstateAccount(keyword+"%");
     }
 
     @GetMapping("/Estaccounts/{accountId}")
@@ -60,6 +60,7 @@ public class BankAccountRestAPI {
         this.bankAccountService.credit(creditDTO.getAccountId(),creditDTO.getAmount(),creditDTO.getDescription());
         return creditDTO;
     }
+
 
     @DeleteMapping("/Estaccounts/{id}")
     public void deleteEstate(@PathVariable String id) throws BankAccountNotFoundException {
