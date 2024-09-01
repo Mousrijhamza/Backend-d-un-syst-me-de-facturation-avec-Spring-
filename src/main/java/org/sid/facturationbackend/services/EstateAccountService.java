@@ -2,8 +2,6 @@ package org.sid.facturationbackend.services;
 
 import org.sid.facturationbackend.dtos.*;
 import org.sid.facturationbackend.entities.EstateAccount;
-import org.sid.facturationbackend.entities.RegieAggent;
-import org.sid.facturationbackend.exceptions.BalanceNotSufficientException;
 import org.sid.facturationbackend.exceptions.BankAccountNotFoundException;
 import org.sid.facturationbackend.exceptions.CustomerNotFoundException;
 
@@ -26,10 +24,13 @@ public interface EstateAccountService {
     RegieAggentDTO updateRegie(RegieAggentDTO regieAggentDTO);
 
     void deleteRegieAgent(Long regieId) throws CustomerNotFoundException;
+    void deleteEstateAccount(String id) ;
 
     List<AccountOperationDTO> accountHistory(String accountId);
 
     AccountHistoryDTO getAccountHistory(String accountId, int page, int size) throws BankAccountNotFoundException;
 
     List<RegieAggentDTO> searchRegieAgent(String keyword);
+
+    List<EstateAccountDTO> searchEstateAccount(String keyword);
 }

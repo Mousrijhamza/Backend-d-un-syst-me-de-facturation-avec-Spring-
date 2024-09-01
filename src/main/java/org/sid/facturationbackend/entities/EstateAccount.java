@@ -14,7 +14,7 @@ import java.util.List;
 //@DiscriminatorColumn(name = "TYPE",length = 4)
 @Data @NoArgsConstructor @AllArgsConstructor
 public class EstateAccount {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private String id;
     private double montant;
     private Date createdAt;

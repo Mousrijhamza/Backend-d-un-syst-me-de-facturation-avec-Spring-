@@ -3,6 +3,7 @@ package org.sid.facturationbackend.web;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.sid.facturationbackend.dtos.EstateAccountDTO;
 import org.sid.facturationbackend.dtos.RegieAggentDTO;
 
 import org.sid.facturationbackend.exceptions.CustomerNotFoundException;

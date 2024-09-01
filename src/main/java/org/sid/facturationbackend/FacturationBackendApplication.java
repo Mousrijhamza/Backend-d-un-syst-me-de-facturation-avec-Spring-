@@ -85,8 +85,8 @@ public class FacturationBackendApplication {
                     AccountOperation accountOperation=new AccountOperation();
                     accountOperation.setOperationDate(new Date());
                     accountOperation.setAmount(Math.random()*12000);
-                    accountOperation.setType(Math.random()>0.5? OperationType.DEBIT:
-                            OperationType.CREDIT);
+                    accountOperation.setType(Math.random()>0.5? OperationType.Eau:
+                            OperationType.Électricité);
                     accountOperation.setEstateAccount(acc);
                     accountOperationRepository.save(accountOperation);
                 }

@@ -20,9 +20,7 @@ import org.sid.facturationbackend.repositories.RegieAggentRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -53,7 +51,7 @@ public class EstateAccountServiceImpl implements EstateAccountService {
     @Override
     public EstateAccountDTO saveEstateAccount(double iniTialmontant, String address) {
         EstateAccount estateAccount=new EstateAccount();
-        estateAccount.setId(UUID.randomUUID().toString());
+        estateAccount.setId( UUID.randomUUID().toString());
         estateAccount.setCreatedAt(new Date());
         estateAccount.setMontant(iniTialmontant);
         estateAccount.setStatus(AccountStatus.CREATED);
@@ -79,6 +77,15 @@ public class EstateAccountServiceImpl implements EstateAccountService {
         return regieAggentDTOS;
     }
 
+    @Override
+    public List<EstateAccountDTO> searchEstateAccount(String keyword) {
+        List<EstateAccount> estateAccountList = estateAccountRepository.findAll();
+        List<EstateAccountDTO> estateAccountDTOList = estateAccountList.stream().map( (est)->
+                dtoMapper.fromestateAccount(est))
+                .collect(Collectors.toList());
+        return estateAccountDTOList;
+
+    }
 
 
     @Override
@@ -90,7 +97,7 @@ public class EstateAccountServiceImpl implements EstateAccountService {
 //            throw new BalanceNotSufficientException("Balance not sufficient");
 
         AccountOperation accountOperation=new AccountOperation();
-        accountOperation.setType(OperationType.DEBIT);
+        accountOperation.setType(OperationType.Eau);
         accountOperation.setAmount(amount);
         accountOperation.setDescription(description);
         accountOperation.setOperationDate(new Date());
@@ -112,7 +119,7 @@ public class EstateAccountServiceImpl implements EstateAccountService {
 //            throw new BalanceNotSufficientException("Balance not sufficient");
 
         AccountOperation accountOperation=new AccountOperation();
-        accountOperation.setType(OperationType.DEBIT);
+        accountOperation.setType(OperationType.Électricité);
         accountOperation.setAmount(amount);
         accountOperation.setDescription(description);
         accountOperation.setOperationDate(new Date());
@@ -158,6 +165,11 @@ public class EstateAccountServiceImpl implements EstateAccountService {
     }
 
     @Override
+    public void deleteEstateAccount(String id) {
+        estateAccountRepository.deleteById(id);
+    }
+
+    @Override
     public List<AccountOperationDTO> accountHistory(String accountId){
         List<AccountOperation> accountOperations = accountOperationRepository.findByEstateAccountId(accountId);
         return accountOperations.stream().map(op->dtoMapper.fromAccountOperation(op)).collect(Collectors.toList());
@@ -171,7 +183,7 @@ public class EstateAccountServiceImpl implements EstateAccountService {
         AccountHistoryDTO accountHistoryDTO=new AccountHistoryDTO();
         List<AccountOperationDTO> accountOperationDTOS = accountOperations.getContent().stream().map(op -> dtoMapper.fromAccountOperation(op)).collect(Collectors.toList());
         accountHistoryDTO.setAccountOperationDTOS(accountOperationDTOS);
-        accountHistoryDTO.setAccountId(bankAccount.getId());
+        accountHistoryDTO.setAccountId(Long.valueOf(bankAccount.getId()));
         accountHistoryDTO.setBalance(bankAccount.getMontant());
         accountHistoryDTO.setCurrentPage(page);
         accountHistoryDTO.setPageSize(size);

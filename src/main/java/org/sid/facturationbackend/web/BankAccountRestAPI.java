@@ -6,6 +6,7 @@ import org.sid.facturationbackend.exceptions.BalanceNotSufficientException;
 import org.sid.facturationbackend.exceptions.BankAccountNotFoundException;
 
 import org.sid.facturationbackend.services.EstateAccountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 public class BankAccountRestAPI {
     private EstateAccountService bankAccountService;
 
+    @Autowired
     public BankAccountRestAPI(EstateAccountService bankAccountService) {
         this.bankAccountService = bankAccountService;
     }
@@ -22,6 +24,10 @@ public class BankAccountRestAPI {
     @PostMapping("/Estaccounts")
     public EstateAccountDTO addEstateAccount(@RequestBody EstateAccountDTO estAccountDTO){
         return bankAccountService.saveEstateAccount(estAccountDTO.getMontant(), estAccountDTO.getAddress());
+    }
+    @GetMapping("/Estaccounts/search")
+    public List<EstateAccountDTO> searchEstateaccount(@RequestParam(name = "keyword",defaultValue = "") String keyword){
+        return bankAccountService.searchEstateAccount("%"+keyword+"%");
     }
 
     @GetMapping("/Estaccounts/{accountId}")
@@ -53,6 +59,11 @@ public class BankAccountRestAPI {
     public CreditDTO credit(@RequestBody CreditDTO creditDTO) throws BankAccountNotFoundException {
         this.bankAccountService.credit(creditDTO.getAccountId(),creditDTO.getAmount(),creditDTO.getDescription());
         return creditDTO;
+    }
+
+    @DeleteMapping("/Estaccounts/{id}")
+    public void deleteEstate(@PathVariable String id) throws BankAccountNotFoundException {
+        this.bankAccountService.deleteEstateAccount(id);
     }
 
 }
